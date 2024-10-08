@@ -3,7 +3,7 @@ import React from 'react';
 import './PokemonCountSelector.css';
 
 const PokemonCountSelector = ({ count, onChange }) => {
-  const options = [10, 20, 25, 50, 100];
+  const options = [10, 20, 25, 50, 100, 9999];
 
   return (
     <div className="count-selector">

@@ -7,11 +7,13 @@ const APIComponent = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pageUrl, setPageUrl] = useState({ next: null, previous: null });
-  const [pokemonCount, setPokemonCount] = useState(10); 
+  const [pokemonCount, setPokemonCount] = useState(10);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    fetchData(0, pokemonCount); 
-  }, [pokemonCount]); 
+    setLoading(true);
+    fetchData(0, pokemonCount);
+  }, [pokemonCount]);
 
   const fetchData = async (offset, count) => {
     const url = `https://pokeapi.co/api/v2/pokemon?limit=${count}&offset=${offset}`;
@@ -58,12 +60,35 @@ const APIComponent = () => {
     }
   };
 
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const filteredData = filter
+    ? data.filter(pokemon => pokemon.name.toLowerCase().includes(filter.toLowerCase()))
+    : data;
+
+  const handleCountChange = (count) => {
+    setPokemonCount(count);
+    fetchData(0, count);
+  };
+
   return (
     <div className="container">
       <h1 className="title">Données API Pokémon</h1>
       <p className="description">Liste des Pokémon</p>
 
-      <PokemonCountSelector count={pokemonCount} onChange={setPokemonCount} />
+      <PokemonCountSelector count={pokemonCount} onChange={handleCountChange} />
+
+      <div className="search-bar-container">
+        <input
+          type="text"
+          placeholder="Filtrer par nom de Pokémon"
+          value={filter}
+          onChange={handleFilterChange}
+          className="search-bar"
+        />
+      </div>
 
       <Pagination 
         next={pageUrl.next} 
@@ -76,7 +101,7 @@ const APIComponent = () => {
         <div className="loading">Chargement en cours...</div>
       ) : (
         <div className="card-container">
-          {data.map((pokemon, index) => (
+          {filteredData.map((pokemon, index) => (
             <div className="pokemon-card" key={index}>
               <img src={pokemon.imageUrl} alt={pokemon.name} className="pokemon-image" />
               <h3 className="pokemon-name">{pokemon.name}</h3>
