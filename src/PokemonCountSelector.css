@@ -1,0 +1,54 @@
+
+.count-selector {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+  }
+  
+  .count-label {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+    color: #ffffff;
+  }
+  
+  .select-wrapper {
+    position: relative;
+    width: 200px;
+  }
+  
+  .pokemon-select {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    font-size: 1rem;
+    color: #495057;
+    appearance: none;
+    cursor: pointer;
+    transition: border 0.3s, background-color 0.3s;
+  }
+  
+  .pokemon-select:hover {
+    border-color: #0056b3;
+    background-color: #e9ecef;
+  }
+  
+  .pokemon-select:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+
+  .pokemon-select::after {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #007BFF;
+    font-size: 0.8rem;
+  }
+  
