@@ -16,7 +16,7 @@ const APIComponent = () => {
   }, [pokemonCount]);
 
   const fetchData = async (offset, count) => {
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=${count}&offset=${offset}`;
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${(count == "Tout" ? -1 : count)}&offset=${offset}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -80,15 +80,17 @@ const APIComponent = () => {
 
       <PokemonCountSelector count={pokemonCount} onChange={handleCountChange} />
 
-      <div className="search-bar-container">
-        <input
-          type="text"
-          placeholder="Filtrer par nom de Pokémon"
-          value={filter}
-          onChange={handleFilterChange}
-          className="search-bar"
-        />
-      </div>
+      {pokemonCount === "Tout" && (
+        <div className="search-bar-container">
+          <input
+            type="text"
+            placeholder="Filtrer par nom de Pokémon"
+            value={filter}
+            onChange={handleFilterChange}
+            className="search-bar"
+          />
+        </div>
+      )}
 
       <Pagination 
         next={pageUrl.next} 
